@@ -69,21 +69,34 @@ class UserRepositoryImpl:UserRepository {
         return Optional.of(userDecooded);
     }
 
-    override fun update(updatedUser: TbUsersRecord?, id: Int?): Int {
+    override fun update(tbUsersRecord: TbUsersRecord?, id: Int?): Int {
         val userID: Int =
             dbDSL.update(TB_USERS)
-                 .set(TB_USERS.USER_NAME, updatedUser?.userName)
-                 .set( TB_USERS.USER_EMAIL, updatedUser?.userEmail)
-                 .set(TB_USERS.USER_PHONE, updatedUser?.userPhone)
-                 .set(TB_USERS.USER_CPF, updatedUser?.userCpf)
-                 .set(TB_USERS.USER_BIRTHDATE, updatedUser?.userBirthdate)
-                 .set( TB_USERS.USER_PASSWORD, updatedUser?.userPassword)
-                 .where(TB_USERS.USER_ID.eq(id)).execute();
+                 .set(TB_USERS.USER_NAME, tbUsersRecord?.userName)
+                 .set( TB_USERS.USER_EMAIL, tbUsersRecord?.userEmail)
+                 .set(TB_USERS.USER_PHONE, tbUsersRecord?.userPhone)
+                 .set(TB_USERS.USER_CPF, tbUsersRecord?.userCpf)
+                 .set(TB_USERS.USER_BIRTHDATE, tbUsersRecord?.userBirthdate)
+                 .set( TB_USERS.USER_PASSWORD, tbUsersRecord?.userPassword)
+                 .where(TB_USERS.USER_ID.eq(id))
+                 .execute();
 
         return userID;
     }
 
-    override fun register(tbUsersRecord: TbUsersRecord?) {
-        val user:
+    override fun register(tbUsersRecord: TbUsersRecord?): Int {
+        val userID:Int  =
+            dbDSL
+                .insertInto(TB_USERS)
+                .set(TB_USERS.USER_NAME, tbUsersRecord?.userName)
+                .set( TB_USERS.USER_EMAIL, tbUsersRecord?.userEmail)
+                .set(TB_USERS.USER_PHONE, tbUsersRecord?.userPhone)
+                .set(TB_USERS.USER_CPF, tbUsersRecord?.userCpf)
+                .set(TB_USERS.USER_BIRTHDATE, tbUsersRecord?.userBirthdate)
+                .set( TB_USERS.USER_PASSWORD, tbUsersRecord?.userPassword)
+                .execute();
+
+        return userID;
     }
 }
+

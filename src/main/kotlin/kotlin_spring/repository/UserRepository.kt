@@ -11,5 +11,5 @@ interface UserRepository {
     fun findByPhone(phone: String?): Optional<TbUsersRecord>;
     fun findByCpf(cpf: String?): Optional<TbUsersRecord>;
     fun update(tbUsersRecord: TbUsersRecord?, id: Int?): Int
-    fun register(tbUsersRecord: TbUsersRecord?)
+    fun register(tbUsersRecord: TbUsersRecord?): Int
 }
